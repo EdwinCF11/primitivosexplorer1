@@ -1,0 +1,301 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-bone: #f1ead9;
+  --color-cream: #faf5e7;
+  --color-parchment: #e7ddc3;
+  --color-sand: #d8c9a3;
+  --color-ink: #17211c;
+  --color-pine: #1e3b2d;
+  --color-moss: #33584a;
+  --color-fern: #5f8266;
+  --color-terra: #c4562b;
+  --color-ember: #e08038;
+  --color-sun: #f2b441;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-terra);
+  color: var(--color-cream);
+}
+
+/* ---------- grain overlay ---------- */
+.pe-grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* ---------- typographic helpers ---------- */
+.pe-outline-cream {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(250, 245, 231, 0.85);
+}
+.pe-outline-ink {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(23, 33, 28, 0.55);
+}
+.pe-kicker {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* ---------- marquee ---------- */
+@keyframes pe-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.pe-marquee {
+  display: flex;
+  width: max-content;
+  animation: pe-marquee var(--dur, 32s) linear infinite;
+}
+
+/* ---------- ticket / receipt ---------- */
+.pe-ticket {
+  --notch: 13px;
+  --notch-y: 46%;
+  -webkit-mask-image: radial-gradient(circle var(--notch) at 0 var(--notch-y), transparent 96%, #000 100%),
+    radial-gradient(circle var(--notch) at 100% var(--notch-y), transparent 96%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: radial-gradient(circle var(--notch) at 0 var(--notch-y), transparent 96%, #000 100%),
+    radial-gradient(circle var(--notch) at 100% var(--notch-y), transparent 96%, #000 100%);
+  mask-composite: intersect;
+}
+.pe-dash {
+  background-image: repeating-linear-gradient(to right, currentColor 0 10px, transparent 10px 20px);
+  height: 2px;
+  opacity: 0.35;
+}
+.pe-leader {
+  flex: 1 1 auto;
+  margin-inline: 0.6rem;
+  border-bottom: 2px dotted currentColor;
+  opacity: 0.35;
+  transform: translateY(-5px);
+  min-width: 1.5rem;
+}
+
+/* ---------- sticker / stamp ---------- */
+.pe-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.5px solid currentColor;
+  border-radius: 9999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--color-cream);
+}
+.pe-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgba(23, 33, 28, 0.3);
+  border-radius: 9999px;
+  padding: 0.22rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- form controls ---------- */
+.pe-field {
+  width: 100%;
+  background: var(--color-cream);
+  border: 1.5px solid rgba(23, 33, 28, 0.35);
+  border-radius: 0.9rem;
+  padding: 0.7rem 0.95rem;
+  font-size: 0.92rem;
+  color: var(--color-ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pe-field:focus {
+  outline: none;
+  border-color: var(--color-terra);
+  box-shadow: 0 0 0 3px rgba(196, 86, 43, 0.18);
+}
+.pe-field::placeholder {
+  color: rgba(23, 33, 28, 0.4);
+}
+select.pe-field {
+  appearance: none;
+  padding-right: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2317211C' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.pe-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(23, 33, 28, 0.45);
+  background: linear-gradient(to right, var(--color-terra) var(--fill, 40%), var(--color-parchment) var(--fill, 40%));
+  cursor: pointer;
+}
+.pe-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--color-cream);
+  border: 2.5px solid var(--color-ink);
+  box-shadow: 3px 3px 0 rgba(23, 33, 28, 0.5);
+  cursor: grab;
+}
+.pe-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--color-cream);
+  border: 2.5px solid var(--color-ink);
+  box-shadow: 3px 3px 0 rgba(23, 33, 28, 0.5);
+  cursor: grab;
+}
+
+/* hard offset shadow */
+@utility pe-shadow {
+  box-shadow: 7px 7px 0 rgba(23, 33, 28, 0.9);
+}
+@utility pe-shadow-sm {
+  box-shadow: 4px 4px 0 rgba(23, 33, 28, 0.9);
+}
+@utility pe-shadow-soft {
+  box-shadow: 7px 7px 0 rgba(23, 33, 28, 0.16);
+}
+
+/* ---------- leaflet ---------- */
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: var(--color-parchment);
+  z-index: 0;
+}
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(250, 245, 231, 0.85) !important;
+  color: rgba(23, 33, 28, 0.6);
+}
+.leaflet-control-zoom a {
+  background: var(--color-cream) !important;
+  color: var(--color-ink) !important;
+  border-color: rgba(23, 33, 28, 0.2) !important;
+}
+.pe-pin {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px 9999px 9999px 4px;
+  background: var(--color-terra);
+  border: 2px solid var(--color-ink);
+  transform: rotate(-45deg);
+  display: grid;
+  place-items: center;
+  box-shadow: 3px 3px 0 rgba(23, 33, 28, 0.4);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pe-pin:hover {
+  background: var(--color-ember);
+}
+.pe-pin i {
+  transform: rotate(45deg);
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: var(--color-cream);
+  display: block;
+}
+.pe-pin.pe-pin-base {
+  background: var(--color-pine);
+  width: 28px;
+  height: 28px;
+}
+.pe-tip {
+  background: var(--color-ink) !important;
+  color: var(--color-cream) !important;
+  border: none !important;
+  border-radius: 0.6rem !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600;
+  padding: 0.35rem 0.7rem !important;
+  box-shadow: 4px 4px 0 rgba(23, 33, 28, 0.25) !important;
+}
+.pe-tip::before {
+  display: none !important;
+}
+
+/* ---------- misc ---------- */
+.pe-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.pe-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-parchment);
+}
+.pe-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-moss);
+  border-radius: 999px;
+  border: 2px solid var(--color-parchment);
+}
+
+@keyframes pe-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--r, 0deg));
+  }
+}
+.pe-float {
+  animation: pe-float 5s ease-in-out infinite;
+}
+
+@keyframes pe-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.pe-spin-slow {
+  animation: pe-spin-slow 26s linear infinite;
+}
